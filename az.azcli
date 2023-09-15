@@ -5,7 +5,21 @@ az resource list --location westus
 az vm list
 
 az webapp show \
-    --resource-group <group_name> \
+    --resource-group '63-7de76db9-migrate-a-website-to-azure-web-apps' \
     --name <app_name> \ 
     --query outboundIpAddresses \
     --output tsv
+
+az vm show \
+    --resource-group 63-7de76db9-migrate-a-website-to-azure-web-apps \
+    --name vm \ 
+    --query vm_id \
+    --output tsv
+
+az vm show --resource-group MyResourceGroup --name MyVm --show-details
+az vm extension set -n customScript --publisher Microsoft.Azure.Extensions --ids {vm_id}
+
+
+resourceGroup=$(az group list --query "[].{id:name}" -o tsv)
+appName=az204app$RANDOM
+az webapp up -g $resourceGroup -n $appName --html
