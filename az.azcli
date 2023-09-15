@@ -3,3 +3,9 @@ az login --use-device-code
 
 az resource list --location westus
 az vm list
+
+az webapp show \
+    --resource-group <group_name> \
+    --name <app_name> \ 
+    --query outboundIpAddresses \
+    --output tsv
